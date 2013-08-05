@@ -50,6 +50,9 @@ CIMDisplayApp theApp;
 
 BOOL CIMDisplayApp::InitInstance()
 {
+	if (!AfxOleInit())
+		return FALSE;
+
 	AfxEnableControlContainer();
 
 	// Standard initialization
