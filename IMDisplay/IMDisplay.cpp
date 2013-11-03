@@ -178,7 +178,6 @@ BOOL CIMDisplayApp::InitInstance()
 	try {
 	    std::list<CoderInfo> coderList;
 		coderInfoList( &coderList, CoderInfo::TrueMatch, CoderInfo::AnyMatch, CoderInfo::AnyMatch);
-	    size_t numCoders = coderList.size();
 	}
 	catch(Exception e) {
 	    e.what();
