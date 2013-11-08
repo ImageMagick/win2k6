@@ -268,6 +268,10 @@ void CIMDisplayView::OnRevert()
 
 void CIMDisplayView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
+  magick_unreferenced(pSender);
+  magick_unreferenced(lHint);
+  magick_unreferenced(pHint);
+
     SetViewSize();
 }
 
