@@ -29,6 +29,7 @@ public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -44,6 +45,7 @@ public:
 	void	SetImage( Image inImage )   { m_pImage = inImage; m_pImage.modifyImage(); }
 
 	BOOL	DoReadImage( void );
+	BOOL	DoWriteImage( void );
 
 protected:
 	// these are the custom functions and vars we've added!

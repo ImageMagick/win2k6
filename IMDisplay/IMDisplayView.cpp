@@ -568,7 +568,7 @@ void CIMDisplayView::OnEditCopy()
     if (theBitsH == NULL)
 	 DoDisplayError( "OnEditCopy", GetLastError() );
     else {
-	PixelPacket *pPixels = pDoc->GetImage().getPixels(m_tracker.m_rect.left,
+	const PixelPacket *pPixels = pDoc->GetImage().getConstPixels(m_tracker.m_rect.left,
 							   m_tracker.m_rect.top,
 							   m_tracker.m_rect.Width(),
 							   m_tracker.m_rect.Height());

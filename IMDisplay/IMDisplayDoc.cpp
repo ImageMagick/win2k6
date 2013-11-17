@@ -82,14 +82,23 @@ void CIMDisplayDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CIMDisplayDoc commands
 
-BOOL CIMDisplayDoc::OnOpenDocument(LPCTSTR lpszPathName) 
+BOOL CIMDisplayDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
 	
 	m_szFile = lpszPathName;
-	DoReadImage();
+	return DoReadImage();
+}
+
+BOOL CIMDisplayDoc::OnSaveDocument(LPCTSTR lpszPathName)
+{
+	if (!CDocument::OnSaveDocument(lpszPathName))
+		return FALSE;
 	
+	m_szFile = lpszPathName;
+	DoWriteImage();
+
 	return TRUE;
 }
 
@@ -100,41 +109,75 @@ BOOL CIMDisplayDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 BOOL CIMDisplayDoc::DoReadImage( void )
 {
-    BeginWaitCursor();
+	BeginWaitCursor();
 
-    // Read the image and handle any exceptions
-    try
-    {
-	m_pImage.read(m_szFile.GetBuffer(MAX_PATH+1));
-    }
+	// Read the image and handle any exceptions
+	try
+	{
+		m_pImage.read(m_szFile.GetBuffer(MAX_PATH+1));
+	}
+	// Image may still be usable if there is a warning
+	catch(Magick::Warning &warning)
+	{
+		DoDisplayWarning("DoReadImage",warning.what());
+	}
+	// Image is not usable
+	catch(Magick::Error &error)
+	{
+		DoDisplayError("DoReadImage",error.what());
+		m_pImage.isValid(false);
+		return FALSE;
+	}
+	// Generic exception
+	catch(std::exception &e)
+	{
+		DoDisplayError("DoReadImage",e.what());
+		m_pImage.isValid(false);
+		return FALSE;
+	}
 
-    // Image may still be usable if there is a warning
-    catch(Magick::Warning &warning)
-    {
-      DoDisplayWarning("DoReadImage",warning.what());
-    }
+	// Ensure that image is in sRGB space
+	m_pImage.colorSpace(sRGBColorspace);
 
-    // Image is not usable
-    catch(Magick::Error &error)
-    {
-	DoDisplayError("DoReadImage",error.what());
-        m_pImage.isValid(false);
-	return FALSE;
-    }
+	EndWaitCursor();
 
-    catch(std::exception &e)
-    {
-	DoDisplayError("DoReadImage",e.what());
-        m_pImage.isValid(false);
-	return FALSE;
-    }
+	return TRUE;
+}
 
-    // Ensure that image is in sRGB space
-    m_pImage.colorSpace(sRGBColorspace);
+//-----------------------------------------------------------------------
+// DoWriteImage()
+// Write image.
+//-----------------------------------------------------------------------
 
-    EndWaitCursor();
+BOOL CIMDisplayDoc::DoWriteImage( void )
+{
+	BeginWaitCursor();
 
-    return TRUE;
+	try
+	{
+		m_pImage.write(m_szFile.GetBuffer(MAX_PATH+1));
+	}
+	// Image may still be usable if there is a warning
+	catch(Magick::Warning &warning)
+	{
+		DoDisplayWarning("DoWriteImage",warning.what());
+	}
+	// Image is not usable
+	catch(Magick::Error &error)
+	{
+		DoDisplayError("DoWriteImage",error.what());
+		return FALSE;
+	}
+	// Generic exception
+	catch(std::exception &e)
+	{
+		DoDisplayError("DoWriteImage",e.what());
+		return FALSE;
+	}
+
+	EndWaitCursor();
+
+	return TRUE;
 }
 
 //-----------------------------------------------------------------------
