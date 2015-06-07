@@ -832,7 +832,7 @@ void CIMDisplayView::DoDisplayImage( Image &inImage, CDC* pDC )
         if ( !hBitmap )
         {
           CString message;
-          message.FormatMessage("Windows failed to allocate bitmap of size %1!d!x%2!d!!", 
+          message.FormatMessage(L"Windows failed to allocate bitmap of size %1!d!x%2!d!!", 
           inImage.rows(), inImage.columns());
           DoDisplayError("DoDisplayImage",message);
           return;
@@ -910,7 +910,7 @@ void CIMDisplayView::DoDisplayImage( Image &inImage, CDC* pDC )
 void CIMDisplayView::DoDisplayError(CString szFunction, CString szCause)
 {
     CString szMsg;
-    szMsg.Format("IMDisplayView function [%s] encountered an error.\n%s",szFunction,szCause);
+    szMsg.Format(L"IMDisplayView function [%s] encountered an error.\n%s",szFunction,szCause);
     AfxMessageBox(szMsg,MB_OK);
 }
 
@@ -928,6 +928,6 @@ void CIMDisplayView::DoDisplayError(CString szFunction, DWORD inError )
 	0,
 	NULL 
     );
-    MessageBox( (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION );
+    MessageBox( (LPCTSTR)lpMsgBuf, L"Error", MB_OK | MB_ICONINFORMATION );
     LocalFree( lpMsgBuf );
 }

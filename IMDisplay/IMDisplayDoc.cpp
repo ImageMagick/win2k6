@@ -107,6 +107,20 @@ BOOL CIMDisplayDoc::OnSaveDocument(LPCTSTR lpszPathName)
 // Read image.
 //-----------------------------------------------------------------------
 
+static inline std::string ws2s(const std::wstring& s)
+{
+  size_t
+    len;
+
+  std::string
+    result;
+
+  len=WideCharToMultiByte(CP_UTF8,0,s.c_str(),s.length()+1,0,0,0,0);
+  result=std::string(len,'\0');
+  WideCharToMultiByte(CP_UTF8,0,s.c_str(),s.length()+1,&result[0],len,0,0);
+  return result;
+}
+
 BOOL CIMDisplayDoc::DoReadImage( void )
 {
 	BeginWaitCursor();
@@ -114,7 +128,7 @@ BOOL CIMDisplayDoc::DoReadImage( void )
 	// Read the image and handle any exceptions
 	try
 	{
-		m_pImage.read(m_szFile.GetBuffer(MAX_PATH+1));
+		m_pImage.read(ws2s(m_szFile.GetBuffer(MAX_PATH+1)));
 	}
 	// Image may still be usable if there is a warning
 	catch(Magick::Warning &warning)
@@ -155,7 +169,7 @@ BOOL CIMDisplayDoc::DoWriteImage( void )
 
 	try
 	{
-		m_pImage.write(m_szFile.GetBuffer(MAX_PATH+1));
+		m_pImage.write(ws2s(m_szFile.GetBuffer(MAX_PATH+1)));
 	}
 	// Image may still be usable if there is a warning
 	catch(Magick::Warning &warning)
@@ -188,7 +202,7 @@ BOOL CIMDisplayDoc::DoWriteImage( void )
 void CIMDisplayDoc::DoDisplayError(CString szFunction, CString szCause)
 {
     CString szMsg;
-    szMsg.Format("IMDisplayDoc function [%s] reported an error.\n%s",szFunction,szCause);
+    szMsg.Format(L"IMDisplayDoc function [%s] reported an error.\n%s",szFunction,szCause);
     AfxMessageBox(szMsg,MB_OK);
 }
 
@@ -200,7 +214,7 @@ void CIMDisplayDoc::DoDisplayError(CString szFunction, CString szCause)
 void CIMDisplayDoc::DoDisplayWarning(CString szFunction, CString szCause)
 {
     CString szMsg;
-    szMsg.Format("IMDisplayDoc function [%s] reported a warning.\n%s",szFunction,szCause);
+    szMsg.Format(L"IMDisplayDoc function [%s] reported a warning.\n%s",szFunction,szCause);
     AfxMessageBox(szMsg,MB_OK);
 }
 
