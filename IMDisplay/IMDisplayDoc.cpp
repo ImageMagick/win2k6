@@ -109,15 +109,16 @@ BOOL CIMDisplayDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 static inline std::string ws2s(const std::wstring& s)
 {
-  size_t
+  int
     len;
 
   std::string
     result;
 
-  len=WideCharToMultiByte(CP_UTF8,0,s.c_str(),s.length()+1,0,0,0,0);
+  len=WideCharToMultiByte(CP_UTF8,0,s.c_str(),(int) s.length()+1,0,0,0,0);
   result=std::string(len,'\0');
-  WideCharToMultiByte(CP_UTF8,0,s.c_str(),s.length()+1,&result[0],len,0,0);
+  (void) WideCharToMultiByte(CP_UTF8,0,s.c_str(),(int) s.length()+1,&result[0],
+    len,0,0);
   return result;
 }
 
