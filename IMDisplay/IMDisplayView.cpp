@@ -17,15 +17,17 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#define ClampToQuantum(quantum) (quantum > QuantumRange ? QuantumRange : quantum)
+
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
-#define ScaleQuantumToChar(quantum)  ((unsigned char) (quantum))
+#define ScaleQuantumToChar(quantum)  ((unsigned char) ClampToQuantum(quantum))
 #elif (MAGICKCORE_QUANTUM_DEPTH == 16)
-#define ScaleQuantumToChar(quantum)  ((unsigned char) ((quantum)/257))
+#define ScaleQuantumToChar(quantum)  ((unsigned char) (ClampToQuantum(quantum)/257))
 #elif (MAGICKCORE_QUANTUM_DEPTH == 32)
-#define ScaleQuantumToChar(quantum)  ((unsigned char) ((quantum)/16843009UL))
+#define ScaleQuantumToChar(quantum)  ((unsigned char) (ClampToQuantum(quantum)/16843009UL))
 #elif (MAGICKCORE_QUANTUM_DEPTH == 64)
 #define ScaleQuantumToChar(quantum) \
-  ((unsigned char) ((quantum)/71777214294589695))
+  ((unsigned char) (ClampToQuantum(quantum)/71777214294589695))
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
