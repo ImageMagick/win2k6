@@ -12,38 +12,38 @@
 
 class CShearDialog : public CDialog
 {
-// Construction
+  // Construction
 public:
-	CShearDialog(CWnd* pParent = NULL);   // standard constructor
+  CShearDialog(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(CShearDialog)
-	enum { IDD = IDD_DIALOG_SHEAR };
-	double	m_XShear;
-	double	m_YShear;
-	//}}AFX_DATA
+  //{{AFX_DATA(CShearDialog)
+  enum { IDD = IDD_DIALOG_SHEAR };
+  double	m_XShear;
+  double	m_YShear;
+  //}}AFX_DATA
 
-	void	XShear( double inDegrees )  { m_XShear = inDegrees; }
-	double	XShear( )		    { return m_XShear; }
+  void	XShear(double inDegrees) { m_XShear = inDegrees; }
+  double	XShear() { return m_XShear; }
 
-	void	YShear( double inDegrees )  { m_YShear = inDegrees; }
-	double	YShear( )		    { return m_YShear; }
+  void	YShear(double inDegrees) { m_YShear = inDegrees; }
+  double	YShear() { return m_YShear; }
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CShearDialog)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  // Overrides
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CShearDialog)
+protected:
+  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  //}}AFX_VIRTUAL
 
 // Implementation
 protected:
 
-	// Generated message map functions
-	//{{AFX_MSG(CShearDialog)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  // Generated message map functions
+  //{{AFX_MSG(CShearDialog)
+  virtual BOOL OnInitDialog();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}

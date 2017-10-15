@@ -12,34 +12,34 @@
 
 class CRotateDialog : public CDialog
 {
-// Construction
+  // Construction
 public:
-	CRotateDialog(CWnd* pParent = NULL);   // standard constructor
+  CRotateDialog(CWnd* pParent = NULL);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(CRotateDialog)
-	enum { IDD = IDD_DIALOG_ROTATE };
-	double	m_Angle;
-	//}}AFX_DATA
+  //{{AFX_DATA(CRotateDialog)
+  enum { IDD = IDD_DIALOG_ROTATE };
+  double	m_Angle;
+  //}}AFX_DATA
 
-	void	Angle( double inAngle )	    { m_Angle = inAngle; }
-	double	Angle( void )		    { return m_Angle; }
+  void	Angle(double inAngle) { m_Angle = inAngle; }
+  double	Angle(void) { return m_Angle; }
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CRotateDialog)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  // Overrides
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CRotateDialog)
+protected:
+  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  //}}AFX_VIRTUAL
 
 // Implementation
 protected:
 
-	// Generated message map functions
-	//{{AFX_MSG(CRotateDialog)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  // Generated message map functions
+  //{{AFX_MSG(CRotateDialog)
+  virtual BOOL OnInitDialog();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}
