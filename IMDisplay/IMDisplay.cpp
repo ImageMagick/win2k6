@@ -170,7 +170,7 @@ BOOL CIMDisplayApp::InitInstance()
   //while ( *ps != '\\' )	{ *ps = 0; ps--; }	// shrink it!
         //MagickCore::InitializeMagick( exePath );
 
-  MagickCore::MagickCoreGenesis(NULL, MagickFalse);
+  Magick::InitializeMagick("");
 
   // we do this to init the coder list, but will use it
   // more seriously in the future when we actually build up
@@ -197,6 +197,11 @@ BOOL CIMDisplayApp::InitInstance()
   return TRUE;
 }
 
+BOOL CIMDisplayApp::ExitInstance()
+{
+  Magick::TerminateMagick();
+  return CWinApp::ExitInstance();
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
